@@ -16,9 +16,9 @@ def capture_print(method, expected, actual, desc=""):
 def evaluate_call(expected, actual):
     result = inspect.stack()[1][3] + ": "  # the calling function name
     if (expected == actual):
-        result = result + "success"
+        result = result + "\033[92msuccess\033[00m"
     else: 
-        result = result + "FAIL\nexpected: {0}\nactual: {1}".format(expected, actual)
+        result = result + "\033[91mFAIL\033[00m\n\texpected: {0}\n\tactual: {1}".format(expected, actual)
 
     print(result)
 
@@ -27,7 +27,7 @@ def test_first_are_equal_pass_equal_integers_expect_success():
     #Assign
     expected = 1
     actual = 1
-    expected_out = "capture_print: success"
+    expected_out = "capture_print: \033[92msuccess\033[00m"
 
     #Action
     actual_out = capture_print(test_first.are_equal, expected, actual)
@@ -39,7 +39,7 @@ def test_first_are_equal_pass_unequal_integers_expect_FAIL():
     #Assign
     expected = 1
     actual = 2
-    expected_out = "capture_print: FAIL\nexpected: {0}\nactual: {1}".format(expected, actual)
+    expected_out = "capture_print: \033[91mFAIL\033[00m\n\texpected: {0}\n\tactual: {1}".format(expected, actual)
     
     #Action
     actual_out = capture_print(test_first.are_equal, expected, actual)
@@ -51,7 +51,7 @@ def test_first_are_equal_pass_equal_strings_expect_success():
     #Assign
     expected = "a"
     actual = "a"
-    expected_out = "capture_print: success"
+    expected_out = "capture_print: \033[92msuccess\033[00m"
 
     #Action
     actual_out = capture_print(test_first.are_equal, expected, actual)
@@ -63,7 +63,7 @@ def test_first_are_equal_pass_unequal_strings_expect_FAIL():
     #Assign
     expected = "a"
     actual = "b"
-    expected_out = "capture_print: FAIL\nexpected: {0}\nactual: {1}".format(expected, actual)
+    expected_out = "capture_print: \033[91mFAIL\033[00m\n\texpected: {0}\n\tactual: {1}".format(expected, actual)
     
     #Action
     actual_out = capture_print(test_first.are_equal, expected, actual)
@@ -76,7 +76,7 @@ def test_first_are_equal_pass_equal_integers_and_description_expect_success_with
     expected = "a"
     actual = "a"
     description = "desc"
-    expected_out = "capture_print: desc: success"
+    expected_out = "capture_print: desc: \033[92msuccess\033[00m"
     
     #Action
     actual_out = capture_print(test_first.are_equal, expected, actual, description)
@@ -89,7 +89,7 @@ def test_first_are_equal_pass_unequal_strings_and_description_expect_FAIL_with_d
     expected = "a"
     actual = "b"
     description = "desc"
-    expected_out = "capture_print: desc: FAIL\nexpected: {0}\nactual: {1}".format(expected, actual)
+    expected_out = "capture_print: desc: \033[91mFAIL\033[00m\n\texpected: {0}\n\tactual: {1}".format(expected, actual)
     
     #Action
     actual_out = capture_print(test_first.are_equal, expected, actual, description)

@@ -5,8 +5,8 @@ def are_equal(expected, actual, description = ""):
     if (description != ""):
         result = result + description + ": "
     if (expected == actual):
-        result = result + "success"
+        result = result + "\033[92msuccess\033[00m"
     else: 
-        result = result + "FAIL\nexpected: {0}\nactual: {1}".format(expected, actual)
+        result = result + "\033[91mFAIL\033[00m\n\texpected: {0}\n\tactual: {1}".format(expected, actual)
 
     print(result)
