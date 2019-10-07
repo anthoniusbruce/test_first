@@ -1,3 +1,4 @@
 import test_first_tests
 import kudo_test
 import block_tests
+import chain_tests
