@@ -141,6 +141,50 @@ def Chain_verify_no_blocks_added_expect_True():
     #Assert
     test_first.are_equal(True, result)
 
+def Chain_get_index_1_expect_the_first_block():
+    #Assign
+    theChain = chain.Chain()
+    theChain.add_block("recip1", "nom1", datetime.date.today())
+
+    #Action
+    actual_block = theChain.get(1)
+
+    #Assert
+    test_first.are_equal(theChain.blocks[1].__dict__, actual_block.__dict__)
+
+def Chain_get_index_2_of_3_expect_the_second_block():
+    #Assign
+    theChain = chain.Chain()
+    theChain.add_block("recip1", "nom1", datetime.date.today())
+    theChain.add_block("recip2", "nom2", datetime.date.today())
+    theChain.add_block("recip3", "nom3", datetime.date.today())
+
+    #Action
+    actual_block = theChain.get(2)
+
+    #Assert
+    test_first.are_equal(theChain.blocks[2].__dict__, actual_block.__dict__)
+
+def Chain_get_index_0_expect_None():
+    theChain = chain.Chain()
+    theChain.add_block("recip1", "nom1", datetime.date.today())
+
+    #Action
+    actual_block = theChain.get(0)
+
+    #Assert
+    test_first.are_equal(None, actual_block)
+
+def Chain_get_index_too_large_expect_None():
+    theChain = chain.Chain()
+    theChain.add_block("recip1", "nom1", datetime.date.today())
+
+    #Action
+    actual_block = theChain.get(2)
+
+    #Assert
+    test_first.are_equal(None, actual_block)
+
 #Run tests
 Chain_create_expect_list_with_the_genesis_block()
 Chain_get_genesis_block_expect_a_block_with_genesis_info()
@@ -151,3 +195,7 @@ Chain_verify_reorder_block_expect_False()
 Chain_verify_replace_block_expect_False()
 Chain_verify_change_block_expect_False()
 Chain_verify_no_blocks_added_expect_True()
+Chain_get_index_1_expect_the_first_block()
+Chain_get_index_2_of_3_expect_the_second_block()
+Chain_get_index_0_expect_None()
+Chain_get_index_too_large_expect_None()

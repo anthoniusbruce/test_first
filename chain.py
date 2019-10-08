@@ -31,6 +31,14 @@ class Chain(object):
 
         return ret_val
 
+    def get(self, index):
+        ret_val = None
+
+        if (index > 0 and index < len(self.blocks)):
+            ret_val = self.blocks[index]
+
+        return ret_val
+
     @staticmethod
     def get_genesis_block(timestamp, initial_hash, kudo_date):
         return block.Block(0, timestamp, initial_hash, kudo.Kudo("", "", kudo_date))
