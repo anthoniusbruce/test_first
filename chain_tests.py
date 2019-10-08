@@ -185,6 +185,30 @@ def Chain_get_index_too_large_expect_None():
     #Assert
     test_first.are_equal(None, actual_block)
 
+def Chain_count_add_3_kudos_expect_3():
+    #Assign
+    theChain = chain.Chain()
+    today = datetime.date.today()
+    theChain.add_block("recip1", "nom1", today)
+    theChain.add_block("recip2", "nom2", today)
+    theChain.add_block("recip3", "nom3", today)
+    
+    #Action
+    actual = theChain.count()
+
+    #Assert
+    test_first.are_equal(3, actual)
+
+def Chain_count_no_kudos_expect_0():
+    #Assign
+    theChain = chain.Chain()
+    
+    #Action
+    actual = theChain.count()
+
+    #Assert
+    test_first.are_equal(0, actual)
+
 #Run tests
 Chain_create_expect_list_with_the_genesis_block()
 Chain_get_genesis_block_expect_a_block_with_genesis_info()
@@ -199,3 +223,5 @@ Chain_get_index_1_expect_the_first_block()
 Chain_get_index_2_of_3_expect_the_second_block()
 Chain_get_index_0_expect_None()
 Chain_get_index_too_large_expect_None()
+Chain_count_add_3_kudos_expect_3()
+Chain_count_no_kudos_expect_0()

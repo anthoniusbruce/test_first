@@ -39,6 +39,9 @@ class Chain(object):
 
         return ret_val
 
+    def count(self):
+        return len(self.blocks) - 1
+
     @staticmethod
     def get_genesis_block(timestamp, initial_hash, kudo_date):
         return block.Block(0, timestamp, initial_hash, kudo.Kudo("", "", kudo_date))
