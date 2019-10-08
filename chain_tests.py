@@ -8,7 +8,7 @@ def Chain_create_expect_list_with_the_genesis_block():
     theChain = chain.Chain()
 
     #Assert
-    test_first.are_equal(1, len(theChain.blocks), "One block is create")
+    test_first.are_equal(1, len(theChain.blocks), "One block is created")
 
 def Chain_get_genesis_block_expect_a_block_with_genesis_info():
     #Assign
