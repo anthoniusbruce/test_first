@@ -51,7 +51,103 @@ def Chain_add_block_expect_index_of_well_formed_block():
     test_first.are_equal(expected_date, theChain.blocks[actual_index].kudo.date, "date")
     test_first.are_equal(theChain.blocks[0].hash, theChain.blocks[actual_index].previous_hash, "previous hash matches")
 
+def Chain_verify_add_3_blocks_expect_True():
+    #Assign
+    theChain = chain.Chain()
+    today = datetime.date.today()
+    theChain.add_block("recip1", "nom1", today)
+    theChain.add_block("recip2", "nom2", today)
+    theChain.add_block("recip3", "nom3", today)
+
+    #Action
+    result = theChain.verify()
+
+    #Assert
+    test_first.are_equal(True, result)
+
+def Chain_verify_remove_block_expect_False():
+    #Assign
+    theChain = chain.Chain()
+    today = datetime.date.today()
+    theChain.add_block("recip1", "nom1", today)
+    theChain.add_block("recip2", "nom2", today)
+    theChain.add_block("recip3", "nom3", today)
+    theChain.blocks.remove(theChain.blocks[2])
+
+    #Action
+    result = theChain.verify()
+
+    #Assert
+    test_first.are_equal(False, result)
+
+def Chain_verify_reorder_block_expect_False():
+    #Assign
+    theChain = chain.Chain()
+    today = datetime.date.today()
+    theChain.add_block("recip1", "nom1", today)
+    theChain.add_block("recip2", "nom2", today)
+    theChain.add_block("recip3", "nom3", today)
+    hold_block = theChain.blocks[2]
+    theChain.blocks.remove(theChain.blocks[2])
+    theChain.blocks.append(hold_block)
+
+    #Action
+    result = theChain.verify()
+
+    #Assert
+    test_first.are_equal(False, result)
+
+def Chain_verify_replace_block_expect_False():
+    #Assign
+    theChain = chain.Chain()
+    today = datetime.date.today()
+    theChain.add_block("recip1", "nom1", today)
+    theChain.add_block("recip2", "nom2", today)
+    theChain.add_block("recip3", "nom3", today)
+    theChain.blocks.remove(theChain.blocks[2])
+    alt_chain = chain.Chain()
+    alt_chain.add_block("recip1", "nom1", today)
+    alt_chain.add_block("recip2", "nom2", today)
+    theChain.blocks.insert(2, alt_chain.blocks[2])
+
+    #Action
+    result = theChain.verify()
+
+    #Assert
+    test_first.are_equal(False, result)
+
+def Chain_verify_change_block_expect_False():
+    #Assign
+    theChain = chain.Chain()
+    today = datetime.date.today()
+    theChain.add_block("recip1", "nom1", today)
+    theChain.add_block("recip2", "nom2", today)
+    theChain.add_block("recip3", "nom3", today)
+    theChain.blocks[2].timestamp = datetime.datetime.utcnow()
+
+    #Action
+    result = theChain.verify()
+
+    #Assert
+    test_first.are_equal(False, result)
+
+def Chain_verify_no_blocks_added_expect_True():
+    #Assign
+    theChain = chain.Chain()
+
+    #Action
+    result = theChain.verify()
+
+    #Assert
+    test_first.are_equal(True, result)
+
 #Run tests
 Chain_create_expect_list_with_the_genesis_block()
 Chain_get_genesis_block_expect_a_block_with_genesis_info()
 Chain_add_block_expect_index_of_well_formed_block()
+Chain_verify_add_3_blocks_expect_True()
+Chain_verify_remove_block_expect_False()
+Chain_verify_reorder_block_expect_False()
+Chain_verify_replace_block_expect_False()
+Chain_verify_change_block_expect_False()
+Chain_verify_no_blocks_added_expect_True()

@@ -17,6 +17,20 @@ class Chain(object):
         self.blocks.append(block.Block(index, timestamp, previous_hash, kudo_rec))
         return index
 
+    def verify(self):
+        ret_val = True
+
+        for i in range(1, len(self.blocks)):
+            current = self.blocks[i]
+            if (current.index != i):
+                ret_val = False
+            elif (current.previous_hash != self.blocks[i-1].hash):
+                ret_val = False
+            elif (current.hash != current.hashing(current.index, current.timestamp, current.previous_hash, current.kudo)):
+                ret_val = False
+
+        return ret_val
+
     @staticmethod
     def get_genesis_block(timestamp, initial_hash, kudo_date):
         return block.Block(0, timestamp, initial_hash, kudo.Kudo("", "", kudo_date))
