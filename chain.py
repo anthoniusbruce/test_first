@@ -35,12 +35,18 @@ class Chain(object):
         ret_val = None
 
         if (index > 0 and index < len(self.blocks)):
-            ret_val = self.blocks[index]
+            ret_val = self.blocks[index].kudo
 
         return ret_val
 
     def count(self):
         return len(self.blocks) - 1
+
+    def get_list(self):
+        kudos = []
+        for i in range(1, len(self.blocks)):
+            kudos.append(self.blocks[i].kudo)
+        return kudos
 
     @staticmethod
     def get_genesis_block(timestamp, initial_hash, kudo_date):
