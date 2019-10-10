@@ -1,7 +1,8 @@
-#!test_first_venv/bin/python
+#!virtual_env/bin/python
 import flask
 import chain
 import kudo_jsonencoder
+import request_validator
 
 app = flask.Flask(__name__)
 blockchain = chain.Chain()
@@ -13,8 +14,9 @@ def index():
 @app.route("/test_first/api/v1.0/kudos", methods = ["POST"])
 def add_kudo():
     json = flask.request.json
-    if (not json or not "recipient" in json or not "nominator" in json or not "date" in json):
-        flask.abort(400)
+    valid = request_validator.RequestValidator.validate_post(json)
+    if (not valid[0]):
+        flask.abort(400, valid[1])
 
     result = blockchain.add_block(json["recipient"], json["nominator"], json["date"])
 
