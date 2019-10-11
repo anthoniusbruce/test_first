@@ -1,4 +1,3 @@
-#!virtual_env/bin/python
 import flask
 import chain
 import kudo_jsonencoder
@@ -30,4 +29,4 @@ def get_list():
     return response
 
 if (__name__ == "__main__"):
-    app.run(port = 5002, debug=True)
+    app.run()
