@@ -28,5 +28,10 @@ def get_list():
     response = flask.Response(encoder.encode(kudo_list), mimetype="application/json")
     return response
 
+@app.route("/test_first/api/v1.0/validate", methods = ["GET"])
+def validate():
+    isvalid = blockchain.verify()
+    return flask.jsonify(isvalid)
+
 if (__name__ == "__main__"):
     app.run()
