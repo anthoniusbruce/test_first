@@ -17,9 +17,9 @@ def add_kudo():
     if (not valid[0]):
         flask.abort(400, valid[1])
 
-    result = blockchain.add_block(json["recipient"], json["nominator"], json["date"])
+    blockchain.add_block(json["recipient"], json["nominator"], json["date"])
 
-    return flask.jsonify({"index": result})
+    return flask.Response(status=201)
 
 @app.route("/test_first/api/v1.0/kudos", methods = ["GET"])
 def get_list():

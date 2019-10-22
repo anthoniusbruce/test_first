@@ -1,6 +1,7 @@
 import block
 import datetime
 import kudo
+import threading
 
 class Chain(object):
     def __init__(self):
@@ -8,14 +9,18 @@ class Chain(object):
         initial_hash = "inital_hash"
         date = datetime.date(timestamp.year, timestamp.month, timestamp.day)
         self.blocks = [self.get_genesis_block(timestamp, initial_hash, date)]
+        self.lock = threading.Lock()
 
     def add_block(self, recipient, nominator, date):
-        index = len(self.blocks)
-        timestamp = datetime.datetime.utcnow()
-        previous_hash = self.blocks[index - 1].hash
-        kudo_rec = kudo.Kudo(recipient, nominator, date)
-        self.blocks.append(block.Block(index, timestamp, previous_hash, kudo_rec))
-        return index
+        self.lock.acquire()
+        try:
+            index = len(self.blocks)
+            timestamp = datetime.datetime.utcnow()
+            previous_hash = self.blocks[index - 1].hash
+            kudo_rec = kudo.Kudo(recipient, nominator, date)
+            self.blocks.append(block.Block(index, timestamp, previous_hash, kudo_rec))
+        finally:
+            self.lock.release()
 
     def verify(self):
         ret_val = True

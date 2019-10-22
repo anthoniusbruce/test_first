@@ -41,15 +41,14 @@ def Chain_add_block_expect_index_of_well_formed_block():
     expected_date = datetime.date(1972, 4, 22)
 
     #Action
-    actual_index = theChain.add_block(expected_recipient, expected_nominator, expected_date)
+    theChain.add_block(expected_recipient, expected_nominator, expected_date)
 
     #Assert
-    test_first.are_equal(expected_index, actual_index, "actual index")
-    test_first.are_equal(expected_index, theChain.blocks[actual_index].index, "block index")
-    test_first.are_equal(expected_recipient, theChain.blocks[actual_index].kudo.recipient, "recipient")
-    test_first.are_equal(expected_nominator, theChain.blocks[actual_index].kudo.nominator, "nominator")
-    test_first.are_equal(expected_date, theChain.blocks[actual_index].kudo.date, "date")
-    test_first.are_equal(theChain.blocks[0].hash, theChain.blocks[actual_index].previous_hash, "previous hash matches")
+    test_first.are_equal(expected_index, theChain.blocks[expected_index].index, "block index")
+    test_first.are_equal(expected_recipient, theChain.blocks[expected_index].kudo.recipient, "recipient")
+    test_first.are_equal(expected_nominator, theChain.blocks[expected_index].kudo.nominator, "nominator")
+    test_first.are_equal(expected_date, theChain.blocks[expected_index].kudo.date, "date")
+    test_first.are_equal(theChain.blocks[0].hash, theChain.blocks[expected_index].previous_hash, "previous hash matches")
 
 def Chain_verify_add_3_blocks_expect_True():
     #Assign
