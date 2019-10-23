@@ -1,0 +1,116 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Andy Collins",
+    "version": "1.0.3",
+    "title": "test_first",
+    "contact": {
+      "email": "andy.collins@thomsonreuters.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "tags": [
+    {
+      "name": "Kudo Request",
+      "description": "Example API for creating kudos and getting a list of kudos"
+    }
+  ],
+  "paths": {
+    "/test_first/api/v1.0/kudos": {
+      "get": {
+        "tags": [
+          "Kudos List Request"
+        ],
+        "summary": "Returns Kudos",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/kudoRequests"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Kudo create Request"
+        ],
+        "summary": "Creates a Kudo",
+        "requestBody": {
+          "description": "Kudo Request POST Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/kudosRequestPostBody"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "You cannot nominate yourself"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "kudosRequestPostBody": {
+        "type": "object",
+        "properties": {
+          "recipient": {
+            "type": "string",
+            "format": "string"
+          },
+          "nominator": {
+            "type": "string",
+            "format": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "python consumable date"
+          }
+        }
+      },
+      "kudo": {
+        "type": "object",
+        "properties": {
+          "recipient": {
+            "type": "string",
+            "format": "string"
+          },
+          "nominator": {
+            "type": "string",
+            "format": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "python produced date"
+          }
+        }
+      },
+      "kudoRequests": {
+        "type": "object",
+        "properties": {
+          "kudo": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/kudo"
+            }
+          }
+        }
+      }
+    }
+  }
+}
