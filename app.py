@@ -2,7 +2,6 @@ import flask
 import chain
 import kudo_jsonencoder
 import request_validator
-from flask_swagger_ui import get_swaggerui_blueprint
 
 app = flask.Flask(__name__)
 blockchain = chain.Chain()
@@ -33,19 +32,6 @@ def get_list():
 def validate():
     isvalid = blockchain.verify()
     return flask.jsonify(isvalid)
-
-### swagger specific ###
-SWAGGER_URL = '/swagger'
-API_URL = '/static/swagger.json'
-SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
-    SWAGGER_URL,
-    API_URL,
-    config={
-        'app_name': "test_first"
-    }
-)
-app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
-### end swagger specific ###
 
 if (__name__ == "__main__"):
     app.run()
